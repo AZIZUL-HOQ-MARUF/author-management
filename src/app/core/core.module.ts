@@ -8,6 +8,6 @@ import { StorageService } from './services/storage-service.service';
     CommonModule
   ],
   declarations: [],
-  providers: [ApiService]
+  providers: [ApiService, StorageService]
 })
 export class CoreModule { }
