@@ -1,7 +1,11 @@
 <div class="card mb-3">
   <div class="card-header">
     <div class="text-right">
-      <a (click)="onClickAddFav()"><span class="text-info add-fav">Add fav</span></a>
+      <a (click)="isFav ? onClickRemoveFavt() :  onClickAddFav()">
+        <span class="text-info add-fav">
+          {{ isFav ? 'Remove Favt' : 'Add Favt' }}
+        </span>
+      </a>
     </div>
   </div>
   <div class="card-body author-body">
