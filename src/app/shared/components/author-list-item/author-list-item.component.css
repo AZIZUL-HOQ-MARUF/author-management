@@ -1,0 +1,7 @@
+.add-fav {
+    cursor: pointer;
+}
+.author-body {
+    overflow: hidden;
+    max-height: 220px;
+}

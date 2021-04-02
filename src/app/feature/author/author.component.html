@@ -1,0 +1,29 @@
+<div class="author">
+  <div class="row">
+    <ng-container *ngFor="let author of authorList; trackBy:trackByFn">
+      <div class="col-md-4">
+        <app-author-list-item [data]="author"></app-author-list-item>
+      </div>
+    </ng-container>
+  </div>
+  <div class="row" *ngIf="authorList.length != 0">
+    <div class="col-md-12" >
+      <div class="pagination-wraper">
+        <small class="pagination-total">showing {{ authorList?.length }} of {{totalCount}}</small>
+        <div class="pagination-right">
+          <div class="btn-group float-right">
+            <button *ngFor="let page of pageNumbers" (click)="changePage(page)" class="bs-btn bs-btn__squire"
+              [class.active]="page == selectedPage">
+              {{page}}
+            </button>
+          </div>
+          <select class="pagination-page-size bs-input" [value]="itemPerPage" (change)="changePageSize($event)">
+            <option *ngFor="let number of pageSizeInterVal" [value]="number">{{number}} Per Page</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--/.pagination-wraper-->
+</div>

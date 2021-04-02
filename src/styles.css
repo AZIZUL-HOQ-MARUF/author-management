@@ -1,1 +1,59 @@
 /* You can add global styles to this file, and also import other style files */
+.pagination-wraper{
+    display: flex;
+    width:100%;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.pagination-total{
+    margin-right: auto;
+}
+.pagination-right{
+    display: flex;
+    align-items: center;
+}
+.pagination-right > .btn-group > .bs-btn__squire{
+    margin:1px;
+    min-width: 24px;
+	width:24px;
+}
+.pagination-page-size{
+    width:120px;
+    padding-left: 10px;
+    margin-left: 10px;;
+}
+
+.bs-btn{
+	min-width: 100px;
+	border:0;
+	border-radius: 0;
+	height: 30px;
+	background: #005D6A;
+	color:#fff;
+	cursor: pointer;
+}
+
+.bs-btn:focus {
+    outline: 0;
+		box-shadow: 0 0 0 0.2rem rgba(0,123,255,.5);
+}
+
+.bs-btn:active {
+    background:#023C3E;
+}
+
+.bs-input{
+    height:40px;
+    border:1px solid #eee;
+    border-radius: 0;;
+    padding-left: 10px;
+}
+
+.bs-input:focus {
+    border-color: #005D6A;
+    outline:0;
+    border-radius: 0;
+    box-shadow:none;
+}
