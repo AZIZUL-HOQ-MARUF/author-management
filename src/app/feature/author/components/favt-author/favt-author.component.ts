@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { INITIAL_PAGE_LIMIT, PAGE_SIZE_INTERVAL } from '../../../../shared/application.constant';
 import { StorageService } from '../../../../core/services/storage-service.service';
 import { Author } from '../../../../models/author.model';
 
@@ -11,6 +12,14 @@ export class FavtAuthorComponent implements OnInit {
 
   authorList: Author [] = [];
 
+  public selectedPage = 1;
+
+  public itemPerPage = INITIAL_PAGE_LIMIT;
+
+  public pageSizeInterVal = PAGE_SIZE_INTERVAL;
+  
+  public pageNumbers: any[] = [];
+
   constructor(private storageS: StorageService) { }
 
   ngOnInit() {
@@ -21,6 +30,22 @@ export class FavtAuthorComponent implements OnInit {
   private getFavtAuthorList(authors: any) {
     this.authorList = [];
     Object.keys(authors).forEach(key => void this.authorList.push(authors[key]));
+  }
+
+  get favAuthors(): Author[] {
+    let pageIndex = (this.selectedPage - 1) * this.itemPerPage;
+    this.pageNumbers = Array(Math.ceil(this.authorList.length / this.itemPerPage)).fill(0).map((x, i) => i + 1);
+    return this.authorList.slice(pageIndex, pageIndex + this.itemPerPage);
+  }
+
+  changePage(newPage: number) {
+    this.selectedPage = Number(newPage);
+  }
+
+  changePageSize(event: Event): void {
+    let newSize = (event.target as HTMLSelectElement).value;
+    this.itemPerPage = Number(newSize);
+    this.changePage(1);
   }
 
   onChangeAddToFavt(author: Author): void {
