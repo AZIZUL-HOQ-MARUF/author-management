@@ -3,7 +3,7 @@
     <div class="text-right">
       <a (click)="data.isFav ? onClickRemoveFavt() :  onClickAddFav()">
         <span class="text-info add-fav">
-          {{ data.isFav ? 'Remove Favt' : 'Add Favt' }}
+          {{ data.isFav ? 'Remove Favorite' : 'Add Favorite' }}
         </span>
       </a>
     </div>
@@ -20,7 +20,7 @@
       </div>
       <label class="col-md-3">Bio: </label>
       <div class="col-md-9">
-        <label>{{data.bio}}</label>
+        <label [title]="data.bio">{{data.bio}}</label>
       </div>
     </div>
   </div>
