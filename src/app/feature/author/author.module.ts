@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthorComponent } from './author.component';
+import { AuthorComponent } from '../author/components/author/author.component';
 import { AuthorRoutingModule } from './author.routing.module';
 import { SharedModule } from '../../shared/shared.module';
+import { FavtAuthorComponent } from './components/favt-author/favt-author.component';
 
 @NgModule({
   imports: [
@@ -10,6 +11,6 @@ import { SharedModule } from '../../shared/shared.module';
     AuthorRoutingModule,
     SharedModule
   ],
-  declarations: [AuthorComponent]
+  declarations: [AuthorComponent, FavtAuthorComponent]
 })
 export class AuthorModule { }

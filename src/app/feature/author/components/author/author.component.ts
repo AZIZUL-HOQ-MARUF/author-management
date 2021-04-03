@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Author } from '../../models/author.model';
-import { ApiService } from '../../core/services/api-service.service';
-import { INITIAL_PAGE_LIMIT, PAGE_SIZE_INTERVAL } from '../../shared/application.constant';
-import { StorageService } from 'src/app/core/services/storage-service.service';
+import { Author } from '../../../../models/author.model';
+import { ApiService } from '../../../../core/services/api-service.service';
+import { INITIAL_PAGE_LIMIT, PAGE_SIZE_INTERVAL } from '../../../../shared/application.constant';
+import { StorageService } from '../../../../core/services/storage-service.service';
 
 @Component({
   selector: 'app-author',
@@ -36,14 +36,6 @@ export class AuthorComponent implements OnInit, OnDestroy {
     this.favAuthors = this.getFvrtData();
   }
 
-  ngOnDestroy() {
-    this.subscriptions.forEach(sub => void sub.unsubscribe());
-  }
-
-  trackByFn(index: any, author: Author) {
-    return author ? author._id : null;
-  }
-
   changePage(newPage: number): void {
     this.selectedPage = Number(newPage);
     this.skip = (this.selectedPage * this.itemPerPage) - this.itemPerPage;
@@ -56,51 +48,58 @@ export class AuthorComponent implements OnInit, OnDestroy {
     this.changePage(1);
   }
 
-  getAuthorData(): void {
+  private getAuthorData(): void {
     this.subscriptions.push(
       this.apiS.get(`authors?limit=${this.itemPerPage}&skip=${this.skip}`).subscribe(res => {
         this.totalCount = res.totalCount;
-        this.authorList = res.results;
+
+        this.authorList = res.results.map((data: Author) => {
+          if (this.favAuthors[data._id] !== undefined && this.favAuthors[data._id].hasOwnProperty("isFav")) {
+            data.isFav = this.favAuthors[data._id].isFav;
+          } else {
+            data.isFav = false;
+          }
+          return data;
+        });
+
         this.pageNumbers = Array(Math.ceil(this.totalCount / this.itemPerPage)).fill(0).map((x, i) => i + 1);
       })
     );
   }
 
-  onChangeAddToFavt(event: any): void {
-    this.setFavtData(event);
+  onChangeAddToFavt(author: Author): void {
+    this.setFavtData(author);
     this.favAuthors = this.getFvrtData();
   }
 
-  onChangeRemoveFavt(event: any): void {
-    this.removeFromFavtData(event);
+  onChangeRemoveFavt(author: Author): void {
+    this.removeFromFavtData(author);
     this.favAuthors = this.getFvrtData();
   }
 
-  setFavtData(data: any): void {
-    let favAuthors: any = this.storageS.getFromLocalStorage('favAuthors');
-    if (favAuthors !== null) {
-      favAuthors = JSON.parse(favAuthors);
-      favAuthors[data._id] = data._id;
-      this.storageS.setToLocalStorage('favAuthors',JSON.stringify(favAuthors));
-    } else {
-      favAuthors = { };
-      favAuthors[data._id] = data._id;
-      this.storageS.setToLocalStorage('favAuthors',JSON.stringify(favAuthors));
-    }
+  private setFavtData(data: Author): void {
+    let favAuthors: any = this.getFvrtData();
+    favAuthors[data._id] = data;
+    this.storageS.setToLocalStorage('favAuthors', JSON.stringify(favAuthors));
   }
 
-  removeFromFavtData(data: any): void {
-    let favAuthors: any = this.storageS.getFromLocalStorage('favAuthors');
-    if (favAuthors !== null) {
-      favAuthors = JSON.parse(favAuthors);
-      delete favAuthors[data._id];
-      this.storageS.setToLocalStorage('favAuthors',JSON.stringify(favAuthors));
-    }
+  private removeFromFavtData(data: Author): void {
+    let favAuthors: any = this.getFvrtData();
+    delete favAuthors[data._id];
+    this.storageS.setToLocalStorage('favAuthors', JSON.stringify(favAuthors));
   }
 
-  getFvrtData(): any {
+  private getFvrtData(): any {
     let favAuthors: any = this.storageS.getFromLocalStorage('favAuthors');
     return favAuthors !== null ? JSON.parse(favAuthors) : {};
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => void sub.unsubscribe());
+  }
+
+  trackByFn(index: any, author: Author) {
+    return author ? author._id : null;
   }
   
 }

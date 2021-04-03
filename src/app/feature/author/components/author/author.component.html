@@ -1,11 +1,10 @@
-<div class="author">
+<div class="author-container">
   <div class="row">
     <ng-container *ngFor="let author of authorList; trackBy:trackByFn">
       <div class="col-md-4">
         <app-author-list-item
-         [data]="author" [isFav]="favAuthors[author._id] === author._id"
-         (onAddToFavt)="onChangeAddToFavt($event)" (onRemoveFavt)="onChangeRemoveFavt($event)" >
-        </app-author-list-item>
+         [data]="author" (onAddToFavt)="onChangeAddToFavt($event)"
+          (onRemoveFavt)="onChangeRemoveFavt($event)"></app-author-list-item>
       </div>
     </ng-container>
   </div>

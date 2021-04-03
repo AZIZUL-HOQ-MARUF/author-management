@@ -1,0 +1,15 @@
+<div class="author-container">
+  <div class="row" *ngIf="authorList.length > 0; else noData">
+    <ng-container *ngFor="let author of authorList; trackBy:trackByFn">
+      <div class="col-md-4">
+        <app-author-list-item [data]="author" (onAddToFavt)="onChangeAddToFavt($event)"
+          (onRemoveFavt)="onChangeRemoveFavt($event)"></app-author-list-item>
+      </div>
+    </ng-container>
+  </div>
+  <ng-template #noData>
+      <div class="text-center mt-5">
+        <h1>Oops! No Favorite Data.</h1>
+      </div>
+  </ng-template>
+</div>
