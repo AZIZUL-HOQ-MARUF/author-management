@@ -1,9 +1,9 @@
 <div class="card mb-3">
   <div class="card-header">
     <div class="text-right">
-      <a (click)="isFav ? onClickRemoveFavt() :  onClickAddFav()">
+      <a (click)="data.isFav ? onClickRemoveFavt() :  onClickAddFav()">
         <span class="text-info add-fav">
-          {{ isFav ? 'Remove Favt' : 'Add Favt' }}
+          {{ data.isFav ? 'Remove Favt' : 'Add Favt' }}
         </span>
       </a>
     </div>

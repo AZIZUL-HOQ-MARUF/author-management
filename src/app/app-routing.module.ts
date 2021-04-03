@@ -3,10 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '', redirectTo: 'authors', pathMatch: 'full'
-  },
-  {
-    path: 'authors',
+    path: '',
     loadChildren: () => import('./feature/author/author.module').then(m => m.AuthorModule)
   }
 ];

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { StorageService } from 'src/app/core/services/storage-service.service';
+import { StorageService } from '../../../core/services/storage-service.service';
 
 @Component({
   selector: 'app-author-list-item',
@@ -10,23 +10,23 @@ export class AuthorListItemComponent implements OnInit {
 
   @Input('data') data: any;
 
-  @Input('isFav') isFav: boolean = false;
-
   @Output('onAddToFavt') onAddToFavt: EventEmitter<any> = new EventEmitter();
 
   @Output('onRemoveFavt') onRemoveFavt: EventEmitter<any> = new EventEmitter();
 
-  constructor(private storageS: StorageService) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
   onClickAddFav() {
-    this.onAddToFavt.emit({ _id: this.data._id });
+    this.data.isFav = true;
+    this.onAddToFavt.emit(this.data);
   }
 
   onClickRemoveFavt() {
-    this.onRemoveFavt.emit({ _id: this.data._id });
+    this.data.isFav = false;
+    this.onRemoveFavt.emit(this.data);
   }
 
 }
