@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    api_url: "http://api.quotable.io"
+    api_url: "https://api.quotable.io"
 };
